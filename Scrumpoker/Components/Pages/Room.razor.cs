@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using Scrumpoker.Components.Data;
 using Scrumpoker.Services;
@@ -39,15 +40,16 @@ public partial class Room : IDisposable
     {
         if (firstRender && !_initialized)
         {
+            _initialized = true;
             var savedName = await Js.InvokeAsync<string>("localStorage.getItem", [$"scrumpoker-username-{RoomId}"]);
             if (!string.IsNullOrWhiteSpace(savedName))
             {
                 _userName = savedName;
                 await Join();
-                StateHasChanged();
             }
 
             _initialized = true;
+            StateHasChanged();
         }
     }
 
@@ -120,7 +122,7 @@ public partial class Room : IDisposable
         _showTooltip = true;
         StateHasChanged();
         await Task.Delay(2000);
-        // _showTooltip = false;
+        _showTooltip = false;
         StateHasChanged();
     }
 
@@ -149,5 +151,13 @@ public partial class Room : IDisposable
             return cardImage;
 
         return GetRandomCard();
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await Join();
+        }
     }
 }

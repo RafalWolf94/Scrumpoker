@@ -8,15 +8,39 @@
     flex-direction: column;
     gap: 1.25rem;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     height: 100%;
     width: 30%;
     margin: auto;
 }
 
-.title {
+
+.user-name-box-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-name-box-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.user-name-label {
     font-family: "Bitcount Prop Single", system-ui;
     font-size: 1.25rem;
+    color: var(--gold-color);
+    width: 100%;
+}
+
+
+.title {
+    font-family: "Bitcount Prop Single", system-ui;
+    font-size: 3.25rem;
     color: var(--gold-color);
     width: 100%;
 }
@@ -53,6 +77,49 @@ h3, div {
 
 .room-players {
     height: 75%;
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin: auto;
+    padding: 1rem 0;
+    align-items: start;
+    justify-content: center;
+}
+
+.revealed-card {
+    width: 3rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #000000;
+    border-radius: 0.25rem;
+    margin: auto;
+    font-size: 2rem;
+}
+
+.none-card {
+    width: 3rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #000000;
+    border-radius: 0.25rem;
+    margin: auto;
+    font-size: 2rem;
+}
+
+.chosen-card {
+    width: 3rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #000000;
+    border-radius: 0.25rem;
+    margin: auto;
+    font-size: 2rem;
 }
 
 .room-cards {
@@ -67,16 +134,24 @@ h3, div {
     margin: 0 auto;
 }
 
-.table {
+.table-base {
+    background-image: url(assets/wood.jpg);
     width: 80%;
     margin: auto;
+    border-radius: 1.25rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.table {
     padding: 1.25rem;
+    margin: 2rem;
     gap: 1.25rem;
     display: flex;
     flex-direction: column;
-    border: 1px #268142 solid;
-    border-radius: 0.75rem;
-    background: linear-gradient(359deg, #138f67, #03652187);
+    border-radius: 1.25rem;
+    background-image: url(assets/table.jpg);
+    background-repeat: round;
 }
 
 .card {
@@ -124,15 +199,17 @@ h3, div {
     justify-content: center;
     align-items: center;
     gap: 0.75rem;
-    border-bottom: 1px solid #fff;
+    border-top: 1px solid #fff;
     padding: 0.75rem 0;
 }
 
 .action-button {
+    background-image: url(assets/wood.jpg);
     display: flex;
     align-items: center;
-    border: 1px solid var(--black-bg);
+    border: none;
     border-radius: 0.75rem;
+    justify-content: center;
     height: 2.25rem;
     background-color: var(--gold-color);
     color: var(--black-bg);
@@ -140,21 +217,33 @@ h3, div {
 }
 
 .delete {
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 3.25rem;
+    height: 3.25rem;
     color: var(--danger);
     cursor: pointer;
+    background: none;
+    border: 1px solid var(--gold-color);
 }
 
 .share {
+    background-image: none;
     width: 2.25rem;
     height: 2.25rem;
     color: var(--blue);
     cursor: pointer;
 }
 
+.reveal {
+    height: 3.25rem;
+    cursor: pointer;
+    border: 1px solid var(--gold-color);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: var(--gold-color);
+}
+
 .action-button:hover {
-    background-color: var(--black-bg);
+    background-color: white;
     border-color: var(--gold-color);
 }
 
@@ -169,3 +258,88 @@ h3, div {
     z-index: 1000;
     border-radius: 0.75rem
 }
+
+.rotating-coin {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--black-bg);
+    padding: 20px;
+    width: 50%;
+    height: 50%;
+    border: 1px solid var(--gold-color);
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    box-shadow: 0 5px 5px 6px #0003,
+    0 8px 10px 1px #00000024,
+    0 3px 14px 2px #0000001f;
+    background-image: url(assets/table.jpg);
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    border-color: black;
+    text-align: center;
+}
+
+th {
+    color: black;
+}
+
+th, td {
+    background-color: #d0ef942e;
+}
+
+
+td {
+    padding: 8px 12px;
+    border-bottom: 1px solid black;
+}
+
+.player-card-name {
+    color: black;
+    font-weight: bold;
+}
+

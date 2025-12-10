@@ -1,102 +1,162 @@
 @page "/room/{RoomId}"
+@using Scrumpoker.Shared
 @rendermode InteractiveServer
 
-<div class="room-container">
-    @if (_room == null)
-    {
-        <p>Pokój nie istnieje.</p>
-    }
-    else if (!_joined)
-    {
-        <div class="user-name-box">
-            <span class="title">Imię Gracza:</span>
-            <input
-                class="user-name-input"
-                @bind="_userName"
-                placeholder="Gracz..."/>
-            <button
-                class="primary-button"
-                @onclick="Join">Dołącz
-            </button>
-        </div>
-    }
-    else
-    {
-        <div class="room-users-container">
-            <div class="room-name-title">
-                <h3>@_room.Name (@_room.RoomId)</h3>
-                <div style="position: relative">
-                    <button
-                        class="action-button share"
-                        @onclick="CopyLink">
+@if (!_initialized)
+{
+    <Loader/>
+}
+else
+{
+    <div class="room-container">
+        @if (_room is null)
+        {
+            <p>Pokój nie istnieje.</p>
+        }
+        else
+        {
+            @if (!_joined)
+            {
+                <div
+                    class="modal-backdrop"
+                    @onclick="@(() => _joined = true)">
+                    <div
+                        class="modal-content"
+                        @onclick:stopPropagation>
+                        <div class="user-name-box">
+                            <div class="user-name-box-top">
+                                <img
+                                    src="assets/goldCoin1.png"
+                                    alt="Moneta"
+                                    class="rotating-coin"/>
+                                <span class="title">Dołącz!</span>
+                            </div>
+                            <div class="user-name-box-bottom">
+                                <span class="user-name-label">Imię Gracza:</span>
+                                <input
+                                    class="user-name-input"
+                                    @bind="_userName"
+                                    autofocus
+                                    @onkeydown="HandleKeyDown"
+                                    placeholder="Gracz..."/>
+                                <button
+                                    class="primary-button"
+                                    @onclick="Join">Dołącz
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="room-users-container">
+                <div class="room-name-title">
+                    <h3>@_room.Name (@_room.RoomId)</h3>
+                    <div style="position: relative">
+                        <button
+                            class="action-button share"
+                            @onclick="CopyLink">
                         <span class="material-icons-outlined">
                             share
                         </span>
-                    </button>
-                    @if (_showTooltip)
-                    {
-                        <div class="tooltip">@CopyStatus</div>
-                    }
-                </div>
-
-            </div>
-
-            <div class="room-players">
-                @foreach (var p in _room.Players.Values)
-                {
-                    <div>
-                        @p.UserName: @(_room.CardsRevealed ? p.Card ?? "—" : p.Card == null ? "?" : "Wybrano")
-                    </div>
-                }
-            </div>
-
-            <div class="table">
-                <div class="actions">
-                    <button
-                        class="action-button"
-                        disabled="@(!AllSelected)"
-                        @onclick="Reveal">Pokaż karty
-                    </button>
-                    <button
-                        class="action-button delete"
-                        @onclick="Clear">
-                        <span class="material-icons-outlined">
-                            delete
-                        </span>
-                    </button>
-                </div>
-
-                <div class="room-cards">
-                    @foreach (var card in _cards)
-                    {
-                        var classes = "card";
-                        string bgImage;
-                        if (card == _selectedCard)
-                        {
-                            bgImage = _selectedCardImage;
-                            classes += " selected";
-                        }
-                        else if (card == _hoveredCard)
-                        {
-                            bgImage = _hoverCard;
-                        }
-                        else
-                        {
-                            bgImage = DefaultCard;
-                        }
-
-
-                        <button
-                            class="@classes"
-                            style="background-image: url('@bgImage')"
-                            @onclick="@(() => SelectCard(card))"
-                            @onmouseover="@(() => OnHover(card))"
-                            @onmouseout="OnLeave">
-                            @card
                         </button>
-                    }
+                        @if (_showTooltip)
+                        {
+                            <div class="tooltip">@CopyStatus</div>
+                        }
+                    </div>
+
                 </div>
+
+                <div class="table-base">
+                    <div class="table">
+                        <div class="room-cards">
+                            @foreach (var card in _cards)
+                            {
+                                var classes = "card";
+                                string bgImage;
+                                if (card == _selectedCard)
+                                {
+                                    bgImage = _selectedCardImage;
+                                    classes += " selected";
+                                }
+                                else if (card == _hoveredCard)
+                                {
+                                    bgImage = _hoverCard;
+                                }
+                                else
+                                {
+                                    bgImage = DefaultCard;
+                                }
+
+                                <button
+                                    class="@classes"
+                                    style="background-image: url('@bgImage')"
+                                    @onclick="@(() => SelectCard(card))"
+                                    @onmouseover="@(() => OnHover(card))"
+                                    @onmouseout="OnLeave">
+                                    @card
+                                </button>
+                            }
+                        </div>
+                        <div class="actions">
+                            <button
+                                class="action-button reveal"
+                                disabled="@(!AllSelected)"
+                                @onclick="Reveal">Pokaż karty
+                            </button>
+                            <button
+                                class="action-button delete"
+                                @onclick="Clear">
+                                <span class="material-icons-outlined">
+                                    delete
+                                </span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="room-players">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>IMIĘ</th>
+                            <th>KARTA</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var player in _room.Players.Values)
+                        {
+                            <tr>
+                                <td class="player-card-name">@player.UserName</td>
+                                <td>
+                                    @if (_room.CardsRevealed)
+                                    {
+                                        <div class="revealed-card">
+                                            @(player.Card ?? "—")
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        if (player.Card == null)
+                                        {
+                                            <div class="none-card">-</div>
+                                        }
+                                        else
+                                        {
+                                            <div class="chosen-card">?</div>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+
+                </div>
+
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
+}

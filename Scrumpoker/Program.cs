@@ -8,7 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-
+builder.Services.AddServerSideBlazor().AddCircuitOptions(options => 
+{
+    options.DetailedErrors = true;
+});
 builder.Services.AddSingleton<RoomStore>();
 builder.Services.AddSingleton<UserConnectionTracker>();
 builder.Services.AddScoped<CircuitIdService>();
