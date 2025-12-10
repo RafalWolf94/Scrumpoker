@@ -1,0 +1,13 @@
+@page "/"
+@rendermode InteractiveServer
+@using Scrumpoker.Components.Data
+@inject NavigationManager Nav
+@inject RoomStore Store
+
+<div class="container">
+    <h3 class="title">Scrum Poker</h3>
+    <button
+        class="primary-button"
+        @onclick="@Create">Stwórz pokój
+    </button>
+</div>

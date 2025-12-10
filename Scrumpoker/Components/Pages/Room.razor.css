@@ -1,0 +1,171 @@
+.room-container {
+    height: 100%;
+    padding: 1.25rem;
+}
+
+.user-name-box {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 30%;
+    margin: auto;
+}
+
+.title {
+    font-family: "Bitcount Prop Single", system-ui;
+    font-size: 1.25rem;
+    color: var(--gold-color);
+    width: 100%;
+}
+
+.user-name-input {
+    color: var(--black-bg);
+    font-size: 1.25rem;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 0.25rem;
+    display: flex;
+    align-self: normal;
+}
+
+h3, div {
+    color: white
+}
+
+.room-users-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    gap: 1.25rem;
+}
+
+.room-name-title {
+    font-family: "Bitcount Prop Single", system-ui;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.room-players {
+    height: 75%;
+}
+
+.room-cards {
+    flex-direction: row;
+    align-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: calc(6 * 9rem);
+    width: 100%;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.table {
+    width: 80%;
+    margin: auto;
+    padding: 1.25rem;
+    gap: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px #268142 solid;
+    border-radius: 0.75rem;
+    background: linear-gradient(359deg, #138f67, #03652187);
+}
+
+.card {
+    font-size: 2.25rem;
+    position: relative;
+    width: 8rem;
+    color: var(--gold-color);
+    height: 10rem;
+    border-radius: 0.75rem;
+    border: none;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    font-family: 'Bitcount Prop Single', system-ui;
+    opacity: 0.65;
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 215, 0, 0.2);
+    pointer-events: none;
+    border-radius: 0.75rem;
+}
+
+.card:hover {
+    opacity: 0.8;
+    border: 1px solid var(--gold-color);
+    color: var(--black-bg);
+    background-size: contain;
+}
+
+.card.selected {
+    opacity: 1;
+    border: 1px solid var(--gold-color);
+    color: var(--black-bg);
+    background-size: contain;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid #fff;
+    padding: 0.75rem 0;
+}
+
+.action-button {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--black-bg);
+    border-radius: 0.75rem;
+    height: 2.25rem;
+    background-color: var(--gold-color);
+    color: var(--black-bg);
+    font-size: 1.25rem;
+}
+
+.delete {
+    width: 2.25rem;
+    height: 2.25rem;
+    color: var(--danger);
+    cursor: pointer;
+}
+
+.share {
+    width: 2.25rem;
+    height: 2.25rem;
+    color: var(--blue);
+    cursor: pointer;
+}
+
+.action-button:hover {
+    background-color: var(--black-bg);
+    border-color: var(--gold-color);
+}
+
+.tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    left: 66%;
+    white-space: nowrap;
+    z-index: 1000;
+    border-radius: 0.75rem
+}

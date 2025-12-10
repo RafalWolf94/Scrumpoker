@@ -1,0 +1,61 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+    margin: auto;
+}
+
+.title {
+    font-size: 4rem;
+    font-family: "Bitcount Prop Single", system-ui;
+    color: var(--gold-color);
+    font-weight: 300;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(90deg, var(--gold-color), #fffacd, var(--gold-color));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+    cursor: default;
+}
+
+@keyframes shine {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+
+.coin {
+    position: absolute;
+    top: -50px;
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle at center, var(--gold-color) 60%, #B8860B 100%);
+    border-radius: 50%;
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.primary-button {
+    width: 18rem;
+}
