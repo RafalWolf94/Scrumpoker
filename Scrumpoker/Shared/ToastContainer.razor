@@ -1,0 +1,70 @@
+@using Scrumpoker.Services.Toast
+@inject ToastService Toasts
+
+<div class="toast-container">
+    @foreach (var t in _toasts)
+    {
+        <div class="toast @CssClass(t.Level)" @onclick="() => Dismiss(t.Id)">
+            <div class="toast-title">@t.Title</div>
+            @if (!string.IsNullOrWhiteSpace(t.Message))
+            {
+                <div class="toast-message">@t.Message</div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private readonly List<ToastMessage> _toasts = new();
+
+    protected override void OnInitialized()
+    {
+        Toasts.OnShow += ShowToast;
+        Toasts.OnDismiss += Dismiss;
+    }
+
+    private void ShowToast(ToastMessage toast)
+    {
+        _toasts.Add(toast);
+        InvokeAsync(StateHasChanged);
+
+        _ = AutoDismissAsync(toast);
+    }
+
+    private async Task AutoDismissAsync(ToastMessage toast)
+    {
+        try
+        {
+            await Task.Delay(toast.TimeoutMs);
+            Dismiss(toast.Id);
+        }
+        catch
+        {
+            // ignoruj
+        }
+    }
+
+    private void Dismiss(Guid id)
+    {
+        var idx = _toasts.FindIndex(t => t.Id == id);
+        if (idx >= 0)
+        {
+            _toasts.RemoveAt(idx);
+            InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private static string CssClass(ToastLevel level) => level switch
+    {
+        ToastLevel.Success => "toast-success",
+        ToastLevel.Warning => "toast-warning",
+        ToastLevel.Error => "toast-error",
+        _ => "toast-info"
+    };
+
+    public void Dispose()
+    {
+        Toasts.OnShow -= ShowToast;
+        Toasts.OnDismiss -= Dismiss;
+    }
+}

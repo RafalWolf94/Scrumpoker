@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.Server.Circuits;
 using Scrumpoker.Components;
 using Scrumpoker.Components.Data;
 using Scrumpoker.Services;
+using Scrumpoker.Services.Toast;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,7 @@ builder.Services.AddSingleton<RoomStore>();
 builder.Services.AddSingleton<UserConnectionTracker>();
 builder.Services.AddScoped<CircuitIdService>();
 builder.Services.AddSingleton<CircuitHandler, TrackingCircuitHandler>();
-
+builder.Services.AddSingleton<ToastService>();
 
 var app = builder.Build();
 

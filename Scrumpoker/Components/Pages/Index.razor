@@ -1,8 +1,10 @@
 @page "/"
 @rendermode InteractiveServer
 @using Scrumpoker.Components.Data
+@using Scrumpoker.Services.Toast
 @inject NavigationManager Nav
 @inject RoomStore Store
+@inject ToastService Toasts
 
 <div class="container">
     <h3 class="title">Scrum Poker</h3>
@@ -11,3 +13,13 @@
         @onclick="@Create">Stwórz pokój
     </button>
 </div>
+
+@code {
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Toasts.FlushPending();
+        }
+    }
+}

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using Scrumpoker.Components.Data;
 using Scrumpoker.Services;
+using Scrumpoker.Services.Toast;
 
 namespace Scrumpoker.Components.Pages;
 
@@ -13,7 +14,8 @@ public partial class Room : IDisposable
     [Inject] private UserConnectionTracker Tracker { get; set; }
     [Inject] private CircuitIdService CircuitIdService { get; set; }
     [Inject] private NavigationManager NavigationManager { get; set; }
-
+    [Inject] private ToastService Toasts { get; set; }
+    
     [Parameter] public string RoomId { get; set; }
 
     private RoomModel _room;
@@ -33,6 +35,14 @@ public partial class Room : IDisposable
     protected override void OnInitialized()
     {
         _room = Store.Get(RoomId);
+        if (_room is null)
+        {
+            Toasts.ShowOnNextPage(ToastLevel.Warning, "Pokój nie istnieje", "Przeniosłem Cię na stronę główną.", timeoutMs: 2500);
+            NavigationManager.NavigateTo("/", replace: true);
+            
+            return;
+        }
+            
         Store.OnRoomChanged += RoomChanged;
     }
 

@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Scrumpoker.Services.Toast
+@using Scrumpoker.Shared
+@inject ToastService Toasts
+
+<!DOCTYPE html>
 <html lang="en">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,9 +22,11 @@
 </head>
 
 <body>
-    <Routes />
-    <ReconnectModal />
-    <script src="@Assets["_framework/blazor.web.js"]"></script>
+<ToastContainer @rendermode="InteractiveServer" />
+
+<Routes/>
+<ReconnectModal/>
+<script src="@Assets["_framework/blazor.web.js"]"></script>
 </body>
 
 </html>
