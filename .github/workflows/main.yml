@@ -16,7 +16,7 @@ jobs:
       - name: Connect to VPS and deploy
         uses: appleboy/ssh-action@v0.1.0
         with:
-          host: 146.59.16
+          host: 146.59.16.226
           username: ubuntu
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
