@@ -1,5 +1,6 @@
 ﻿services:
   scrumpoker:
+    container_name: Scrumpoker
     build:
       context: .
       dockerfile: Dockerfile
