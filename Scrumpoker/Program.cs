@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components.Server.Circuits;
+using Scrumpoker;
 using Scrumpoker.Components;
 using Scrumpoker.Components.Data;
 using Scrumpoker.Services;
