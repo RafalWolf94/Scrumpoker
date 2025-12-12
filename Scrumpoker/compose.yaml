@@ -1,0 +1,13 @@
+﻿services:
+  scrumpoker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://+:8080"
+      ASPNETCORE_DETAILEDERRORS: "true"
+      Logging__LogLevel__Default: "Debug"
+    restart: unless-stopped

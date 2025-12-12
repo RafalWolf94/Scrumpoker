@@ -82,7 +82,7 @@ h3, div {
     width: 80%;
     margin: auto;
     padding: 1rem 0;
-    align-items: start;
+    align-items: center;
     justify-content: center;
 }
 
@@ -134,13 +134,20 @@ h3, div {
     margin: 0 auto;
 }
 
+.room-content {
+    display: flex;
+    flex-direction: row;
+    gap: 2.25rem;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+    width: 100%;
+}
+
 .table-base {
-    background-image: url(assets/wood.jpg);
     width: 80%;
     margin: auto;
     border-radius: 1.25rem;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 .table {
@@ -150,16 +157,14 @@ h3, div {
     display: flex;
     flex-direction: column;
     border-radius: 1.25rem;
-    background-image: url(assets/table.jpg);
-    background-repeat: round;
 }
 
 .card {
     font-size: 2.25rem;
     position: relative;
-    width: 8rem;
-    color: var(--gold-color);
-    height: 10rem;
+    width: 6rem;
+    color: var(--black-bg);
+    height: 8rem;
     border-radius: 0.75rem;
     border: none;
     background-size: cover;
@@ -167,7 +172,6 @@ h3, div {
     background-repeat: no-repeat;
     overflow: hidden;
     font-family: 'Bitcount Prop Single', system-ui;
-    opacity: 0.65;
 }
 
 .card::after {
@@ -180,18 +184,49 @@ h3, div {
 }
 
 .card:hover {
-    opacity: 0.8;
     border: 1px solid var(--gold-color);
-    color: var(--black-bg);
-    background-size: contain;
 }
 
 .card.selected {
-    opacity: 1;
     border: 1px solid var(--gold-color);
     color: var(--black-bg);
-    background-size: contain;
 }
+
+.black {
+    box-shadow: inset 8px 8px 6px rgb(0, 0, 0),
+    inset -8px 8px 6px rgb(0, 0, 0),
+    inset 8px -8px 6px rgb(0, 0, 0),
+    inset -8px -8px 6px rgb(0, 0, 0);
+}
+
+.red {
+    box-shadow: inset 8px 8px 6px rgb(255, 0, 0),
+    inset -8px 8px 6px rgb(255, 0, 0),
+    inset 8px -8px 6px rgb(255, 0, 0),
+    inset -8px -8px 6px rgb(255, 0, 0);
+}
+
+.pink {
+    box-shadow: inset 8px 8px 6px rgb(255, 139, 230),
+    inset -8px 8px 6px rgb(255, 139, 230),
+    inset 8px -8px 6px rgb(255, 139, 230),
+    inset -8px -8px 6px rgb(255, 139, 230);
+}
+
+.green {
+    box-shadow: inset 8px 8px 6px rgb(47, 184, 51),
+    inset -8px 8px 6px rgb(47, 184, 51),
+    inset 8px -8px 6px rgb(47, 184, 51),
+    inset -8px -8px 6px rgb(47, 184, 51);
+}
+
+.blue {
+    box-shadow: inset 8px 8px 6px rgb(20, 56, 221),
+    inset -8px 8px 6px rgb(20, 56, 221),
+    inset 8px -8px 6px rgb(20, 56, 221),
+    inset -8px -8px 6px rgb(20, 56, 221);
+}
+
 
 .actions {
     display: flex;
@@ -204,16 +239,15 @@ h3, div {
 }
 
 .action-button {
-    background-image: url(assets/wood.jpg);
     display: flex;
     align-items: center;
-    border: none;
     border-radius: 0.75rem;
     justify-content: center;
     height: 2.25rem;
     background-color: var(--gold-color);
     color: var(--black-bg);
     font-size: 1.25rem;
+    border: 1px solid var(--gold-color);
 }
 
 .delete {
@@ -221,12 +255,9 @@ h3, div {
     height: 3.25rem;
     color: var(--danger);
     cursor: pointer;
-    background: none;
-    border: 1px solid var(--gold-color);
 }
 
 .share {
-    background-image: none;
     width: 2.25rem;
     height: 2.25rem;
     color: var(--blue);
@@ -236,15 +267,16 @@ h3, div {
 .reveal {
     height: 3.25rem;
     cursor: pointer;
-    border: 1px solid var(--gold-color);
     background-repeat: no-repeat;
     background-size: cover;
-    color: var(--gold-color);
 }
 
 .action-button:hover {
-    background-color: white;
-    border-color: var(--gold-color);
+    background-color: var(--black-bg);
+}
+
+.reveal:hover {
+    color: var(--gold-color);
 }
 
 .tooltip {
@@ -312,7 +344,6 @@ table {
     box-shadow: 0 5px 5px 6px #0003,
     0 8px 10px 1px #00000024,
     0 3px 14px 2px #0000001f;
-    background-image: url(assets/table.jpg);
 }
 
 table, th, td {
@@ -343,3 +374,8 @@ td {
     font-weight: bold;
 }
 
+
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}

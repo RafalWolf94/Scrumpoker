@@ -68,92 +68,102 @@ else
 
                 </div>
 
-                <div class="table-base">
-                    <div class="table">
-                        <div class="room-cards">
-                            @foreach (var card in _cards)
-                            {
-                                var classes = "card";
-                                string bgImage;
-                                if (card == _selectedCard)
+                <div class="room-content">
+                    <div class="table-base">
+                        <div class="table">
+                            <div class="room-cards">
+                                @foreach (var card in _cards)
                                 {
-                                    bgImage = _selectedCardImage;
-                                    classes += " selected";
-                                }
-                                else if (card == _hoveredCard)
-                                {
-                                    bgImage = _hoverCard;
-                                }
-                                else
-                                {
-                                    bgImage = DefaultCard;
-                                }
-
-                                <button
-                                    class="@classes"
-                                    style="background-image: url('@bgImage')"
-                                    @onclick="@(() => SelectCard(card))"
-                                    @onmouseover="@(() => OnHover(card))"
-                                    @onmouseout="OnLeave">
-                                    @card
-                                </button>
-                            }
-                        </div>
-                        <div class="actions">
-                            <button
-                                class="action-button reveal"
-                                disabled="@(!AllSelected)"
-                                @onclick="Reveal">Pokaż karty
-                            </button>
-                            <button
-                                class="action-button delete"
-                                @onclick="Clear">
-                                <span class="material-icons-outlined">
-                                    delete
-                                </span>
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="room-players">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>IMIĘ</th>
-                            <th>KARTA</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach (var player in _room.Players.Values)
-                        {
-                            <tr>
-                                <td class="player-card-name">@player.UserName</td>
-                                <td>
-                                    @if (_room.CardsRevealed)
+                                    var classes = "card";
+                                    string hoveredClass;
+                                    if (card == _selectedCard)
                                     {
-                                        <div class="revealed-card">
-                                            @(player.Card ?? "—")
-                                        </div>
+                                        hoveredClass = _selectedCardImage;
+                                        classes += " selected";
+                                    }
+                                    else if (card == _hoveredCard)
+                                    {
+                                        hoveredClass = _hoverCard;
                                     }
                                     else
                                     {
-                                        if (player.Card == null)
+                                        hoveredClass = DefaultCard;
+                                    }
+
+                                    <button
+                                        class="@classes @hoveredClass"
+                                        @onclick="@(() => SelectCard(card))"
+                                        @onmouseover="@(() => OnHover(card))"
+                                        @onmouseout="OnLeave">
+                                        @card
+                                    </button>
+                                }
+                            </div>
+                            <div class="actions">
+                                @{
+                                    var allSelected = AllSelected && !Revealed
+                                        ? string.Empty
+                                        : "disabled";
+                                }
+                                <button
+                                    class="action-button reveal @allSelected"
+                                    @onclick="Reveal">Pokaż karty
+                                </button>
+                                @{
+                                    var revealed = Revealed
+                                        ? string.Empty
+                                        : "disabled";
+                                }
+                                <button
+                                    class="action-button delete @revealed"
+                                    @onclick="Clear">
+                                    <span class="material-icons-outlined">
+                                        delete
+                                    </span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="room-players">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>IMIĘ</th>
+                                <th>KARTA</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var player in _room.Players.Values)
+                            {
+                                <tr>
+                                    <td class="player-card-name">@player.UserName</td>
+                                    <td>
+                                        @if (_room.CardsRevealed)
                                         {
-                                            <div class="none-card">-</div>
+                                            <div class="revealed-card">
+                                                @(player.Card ?? "—")
+                                            </div>
                                         }
                                         else
                                         {
-                                            <div class="chosen-card">?</div>
+                                            if (player.Card == null)
+                                            {
+                                                <div class="none-card">-</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="chosen-card">?</div>
+                                            }
                                         }
-                                    }
-                                </td>
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
 
+                    </div>
                 </div>
 
             </div>

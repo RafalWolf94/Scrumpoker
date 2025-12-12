@@ -24,7 +24,7 @@ public partial class Room : IDisposable
     private string _circuitId;
     private bool _showTooltip;
     private const string CopyStatus = "Link skopiowany do schowka";
-    private const string DefaultCard = "/assets/cards/cards_bg.jpg";
+    private const string DefaultCard = "black";
     private string _hoverCard = string.Empty;
     private string _hoveredCard;
     private string _selectedCard;
@@ -72,6 +72,7 @@ public partial class Room : IDisposable
     }
 
     private bool AllSelected => _room.Players.Values.All(p => p.Card != null);
+    private bool Revealed => _room.CardsRevealed;
 
     private void SelectCard(string card)
     {
@@ -101,11 +102,9 @@ public partial class Room : IDisposable
 
     private void RoomChanged(string roomId)
     {
-        if (roomId == RoomId)
-        {
-            _room = Store.Get(RoomId);
-            InvokeAsync(StateHasChanged);
-        }
+        if (roomId != RoomId) return;
+        _room = Store.Get(RoomId);
+        InvokeAsync(StateHasChanged);
     }
 
     public void Dispose()
@@ -139,18 +138,11 @@ public partial class Room : IDisposable
             _hoverCard = null;
     }
 
-    private string GetRandomCard()
+    private static string GetRandomCard()
     {
-        string[] types = ["clubs", "diamonds", "hearts", "spades"];
-        string[] values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "queen", "king", "ace"];
+        string[] values = ["red", "pink", "green", "blue"];
         Random rnd = new();
-        var value = values[rnd.Next(values.Length)];
-        var type = types[rnd.Next(types.Length)];
-        var cardImage = $"/assets/cards/{value}_of_{type}.png";
-        if (!cardImage.Equals(_selectedCardImage))
-            return cardImage;
-
-        return GetRandomCard();
+        return values[rnd.Next(values.Length)];
     }
 
     private async Task HandleKeyDown(KeyboardEventArgs e)
